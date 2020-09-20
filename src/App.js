@@ -4,6 +4,7 @@ import fetchImagesService from "./services/image-api";
 import Button from "./components/Button/Button";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import ImageGalleryItem from "./components/ImageGalleryItem/ImageGalleryItem";
+import styles from "./App.module.css";
 
 class App extends Component {
   state = {
@@ -29,7 +30,15 @@ class App extends Component {
   fetchImages = () => {
     const {searchQuery, page} = this.state;
     fetchImagesService(searchQuery, page)
-      .then(images => this.setState(prevState => ({images: [...prevState.images, ...images], page: prevState.page + 1})))
+      .then(images => this.setState(prevState => ({
+        images: [...prevState.images, ...images], page: prevState.page + 1
+      })))
+      .then(res => {
+      window.scrollTo({
+        top: document.documentElement.offsetHeight,
+        behavior: 'smooth',
+      });
+    })
       .catch(error => this.setState({error}));
   }
 
@@ -38,7 +47,7 @@ class App extends Component {
   render() {
     const images = this.state.images;
     return (
-      <div className="wrapper">
+      <div className={styles.App}>
         <Searchbar onSubmit={this.handleSearchFormSubmit}/>
         {
           images.length > 0 &&
