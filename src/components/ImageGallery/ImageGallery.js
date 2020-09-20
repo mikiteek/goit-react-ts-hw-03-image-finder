@@ -1,13 +1,14 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-import styles from "./ImageGallery.module.css";
 
 class ImageGallery extends Component {
-
+  static propTypes = {
+    children: PropTypes.node,
+  }
 
   render() {
     return (
-      <ul className={styles["ImageGallery"]}>
+      <ul className="ImageGallery">
         {this.props.children}
       </ul>
     );
