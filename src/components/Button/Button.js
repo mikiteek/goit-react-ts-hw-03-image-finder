@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+import styles from "./Button.module.css";
 
 class Button extends Component {
   static propTypes = {
@@ -8,7 +9,7 @@ class Button extends Component {
 
   render() {
     return (
-      <button type="button" onClick={this.props.onLoadMore}>Load more</button>
+      <button className={styles["Button"]} type="button" onClick={this.props.onLoadMore}>Load more</button>
     )
   }
 }
