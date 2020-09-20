@@ -52,8 +52,8 @@ class App extends Component {
         {
           images.length > 0 &&
           <ImageGallery>
-            {images.map(({id, webformatURL, largeImageURL}) => (
-              <ImageGalleryItem key={id} webURL={webformatURL} largeURL={largeImageURL}/>
+            {images.map(({id, webformatURL}) => (
+              <ImageGalleryItem key={id} webURL={webformatURL}/>
             ))}
           </ImageGallery>
         }
