@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Searchbar from "./components/Searchbar/Searchbar";
 import fetchImagesService from "./services/image-api";
 import Button from "./components/Button/Button";
+import ImageGallery from "./components/ImageGallery/ImageGallery";
 
 class App extends Component {
   state = {
@@ -37,6 +38,9 @@ class App extends Component {
       <div className="wrapper">
         <Searchbar onSubmit={this.handleSearchFormSubmit}/>
         <Button onLoadMore={this.fetchImages}/>
+        <ImageGallery>
+
+        </ImageGallery>
       </div>
     )
   }
