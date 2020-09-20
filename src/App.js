@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Searchbar from "./components/Searchbar/Searchbar";
-import fetchImages from "./services/image-api";
+import fetchImagesService from "./services/image-api";
+import Button from "./components/Button/Button";
 
 class App extends Component {
   state = {
@@ -25,7 +26,7 @@ class App extends Component {
 
   fetchImages = () => {
     const {searchQuery, page} = this.state;
-    fetchImages(searchQuery, page)
+    fetchImagesService(searchQuery, page)
       .then(images => this.setState(prevState => ({images: [...prevState.images, ...images], page: prevState.page + 1})))
       .catch(error => this.setState({error}));
   }
@@ -33,7 +34,10 @@ class App extends Component {
 
   render() {
     return (
-      <Searchbar onSubmit={this.handleSearchFormSubmit}/>
+      <div className="wrapper">
+        <Searchbar onSubmit={this.handleSearchFormSubmit}/>
+        <Button onLoadMore={this.fetchImages}/>
+      </div>
     )
   }
 
