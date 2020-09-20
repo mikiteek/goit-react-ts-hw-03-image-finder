@@ -3,6 +3,7 @@ import Searchbar from "./components/Searchbar/Searchbar";
 import fetchImagesService from "./services/image-api";
 import Button from "./components/Button/Button";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
+import ImageGalleryItem from "./components/ImageGalleryItem/ImageGalleryItem";
 
 class App extends Component {
   state = {
@@ -33,14 +34,21 @@ class App extends Component {
   }
 
 
+
   render() {
+    const images = this.state.images;
     return (
       <div className="wrapper">
         <Searchbar onSubmit={this.handleSearchFormSubmit}/>
-        <Button onLoadMore={this.fetchImages}/>
-        <ImageGallery>
-
-        </ImageGallery>
+        {
+          images.length > 0 &&
+          <ImageGallery>
+            {images.map(({id, webformatURL, largeImageURL}) => (
+              <ImageGalleryItem key={id} webURL={webformatURL} largeURL={largeImageURL}/>
+            ))}
+          </ImageGallery>
+        }
+        {images.length > 0 && <Button onLoadMore={this.fetchImages}/>}
       </div>
     )
   }
