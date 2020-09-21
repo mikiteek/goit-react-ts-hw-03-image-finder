@@ -12,6 +12,7 @@ class App extends Component {
     searchQuery: "",
     page: 1,
     error: null,
+    loading: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -29,23 +30,26 @@ class App extends Component {
 
   fetchImages = () => {
     const {searchQuery, page} = this.state;
+    this.setState({loading: true});
+
     fetchImagesService(searchQuery, page)
       .then(images => this.setState(prevState => ({
         images: [...prevState.images, ...images], page: prevState.page + 1
       })))
-      .then(res => {
+      .then(() => {
       window.scrollTo({
         top: document.documentElement.offsetHeight,
         behavior: 'smooth',
       });
     })
-      .catch(error => this.setState({error}));
+      .catch(error => this.setState({error}))
+      .finally(() => this.setState({loading: false}));
   }
 
 
 
   render() {
-    const images = this.state.images;
+    const {images, loading} = this.state;
     return (
       <div className={styles.App}>
         <Searchbar onSubmit={this.handleSearchFormSubmit}/>
@@ -57,6 +61,7 @@ class App extends Component {
             ))}
           </ImageGallery>
         }
+        {loading && <p>Loading</p>}
         {images.length > 0 && <Button onLoadMore={this.fetchImages}/>}
       </div>
     )
