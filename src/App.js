@@ -5,6 +5,7 @@ import Button from "./components/Button/Button";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import ImageGalleryItem from "./components/ImageGalleryItem/ImageGalleryItem";
 import Spinner from "./components/Spinner/Spinner";
+import Modal from "./components/Modal/Modal";
 import styles from "./App.module.css";
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
     page: 1,
     error: null,
     loading: false,
+    largeImg: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -47,27 +49,34 @@ class App extends Component {
       .finally(() => this.setState({loading: false}));
   }
 
-
+  toggleModal = imgUrl => {
+    this.setState({largeImg: imgUrl})
+  }
 
   render() {
-    const {images, loading} = this.state;
+    const {images, loading, largeImg} = this.state;
     return (
       <div className={styles.App}>
         <Searchbar onSubmit={this.handleSearchFormSubmit}/>
         {
           images.length > 0 &&
           <ImageGallery>
-            {images.map(({id, webformatURL}) => (
-              <ImageGalleryItem key={id} webURL={webformatURL}/>
+            {images.map(({id, webformatURL, largeImageURL}) => (
+              <ImageGalleryItem key={id} webURL={webformatURL} lagreUrl={largeImageURL} onShowModal={this.toggleModal}/>
             ))}
           </ImageGallery>
         }
         {loading && <Spinner/>}
         {images.length > 0 && <Button onLoadMore={this.fetchImages}/>}
+        {
+          largeImg &&
+          <Modal onCloseModal={this.toggleModal}>
+            <img title="large image" src={largeImg}/>
+          </Modal>
+        }
       </div>
-    )
+    );
   }
-
 }
 
 export default App;
