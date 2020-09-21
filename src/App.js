@@ -4,6 +4,7 @@ import fetchImagesService from "./services/image-api";
 import Button from "./components/Button/Button";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import ImageGalleryItem from "./components/ImageGalleryItem/ImageGalleryItem";
+import Spinner from "./components/Spinner/Spinner";
 import styles from "./App.module.css";
 
 class App extends Component {
@@ -61,7 +62,7 @@ class App extends Component {
             ))}
           </ImageGallery>
         }
-        {loading && <p>Loading</p>}
+        {loading && <Spinner/>}
         {images.length > 0 && <Button onLoadMore={this.fetchImages}/>}
       </div>
     )
