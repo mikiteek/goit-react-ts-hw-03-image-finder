@@ -7,18 +7,28 @@ import ImageGalleryItem from "./components/ImageGalleryItem/ImageGalleryItem";
 import Spinner from "./components/Spinner/Spinner";
 import Modal from "./components/Modal/Modal";
 import styles from "./App.module.css";
+import {string} from "prop-types";
 
-class App extends Component {
+interface stateTypes {
+  images: any[],
+  searchQuery: string,
+  page: number,
+  error: any,
+  loading: boolean,
+  largeImg: string,
+}
+
+class App extends Component<{}, stateTypes> {
   state = {
     images: [],
     searchQuery: "",
     page: 1,
     error: null,
     loading: false,
-    largeImg: null,
+    largeImg: "",
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: any, prevState: stateTypes) {
     const prevQuery = prevState.searchQuery;
     const nextQuery = this.state.searchQuery;
 
@@ -27,16 +37,16 @@ class App extends Component {
     }
   };
 
-  handleSearchFormSubmit = query => {
+  private handleSearchFormSubmit = (query: string): void => {
     this.setState({searchQuery: query, page: 1, images: []})
   }
 
-  fetchImages = () => {
+  private fetchImages = (): void => {
     const {searchQuery, page} = this.state;
     this.setState({loading: true});
 
     fetchImagesService(searchQuery, page)
-      .then(images => this.setState(prevState => ({
+      .then(images => this.setState((prevState: stateTypes) => ({
         images: [...prevState.images, ...images], page: prevState.page + 1
       })))
       .then(() => {
@@ -49,7 +59,7 @@ class App extends Component {
       .finally(() => this.setState({loading: false}));
   }
 
-  toggleModal = imgUrl => {
+  private toggleModal = (imgUrl: string) => {
     this.setState({largeImg: imgUrl})
   }
 
