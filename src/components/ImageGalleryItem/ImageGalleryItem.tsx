@@ -1,15 +1,17 @@
 import React, {Component} from "react";
-import PropTypes from "prop-types";
 import styles from "./ImageGalleryItem.module.css";
 
-class ImageGalleryItem extends Component {
-  static propTypes = {
-    webURL: PropTypes.string,
-    onShowModal: PropTypes.func,
-  }
-  getLargeImageUrl = () => {
+interface propTypes {
+  webURL: string,
+  lagreUrl: string,
+  onShowModal: any,
+}
+
+class ImageGalleryItem extends Component<propTypes> {
+  private getLargeImageUrl = (): void => {
     this.props.onShowModal(this.props.lagreUrl);
   }
+
   render() {
     const {webURL} = this.props;
     return (

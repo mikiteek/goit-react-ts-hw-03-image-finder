@@ -1,18 +1,23 @@
 import React, {Component} from "react";
-import PropTypes from "prop-types";
 import styles from "./Modal.module.css";
 
-class Modal extends Component {
+interface propTypes {
+  children: any,
+  onCloseModal: any,
+}
+
+class Modal extends Component<propTypes> {
   componentDidMount() {
     window.addEventListener("keydown", this.closeModalByEscape);
     window.addEventListener("click", this.closeModalByClick);
   }
-  closeModalByEscape = ({code}) => {
+
+  private closeModalByEscape = ({code}: {code: string}): void => {
     if (code === "Escape") {
       this.props.onCloseModal(null);
     }
   }
-  closeModalByClick = ({target}) => {
+  private closeModalByClick = ({target}: {target: any}): void => {
     if (target.className.includes("Overlay")) {
       this.props.onCloseModal(null);
     }

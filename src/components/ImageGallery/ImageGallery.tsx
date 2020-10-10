@@ -2,11 +2,11 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import styles from "./ImageGallery.module.css";
 
-class ImageGallery extends Component {
-  static propTypes = {
-    children: PropTypes.node,
-  }
+interface propTypes {
+  children: any,
+}
 
+class ImageGallery extends Component<propTypes> {
   render() {
     return (
       <ul className={styles["ImageGallery"]}>
